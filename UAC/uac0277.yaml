@@ -1,0 +1,23 @@
+id: clicfix-detection
+
+info:
+  name: Detect JavaScript charCode-based Script Creation
+  author: ProjectDiscoveryAI
+  severity: medium
+  description: |
+    Identifies instances where JavaScript creates elements using `String.fromCharCode` to dynamically generate script tags.
+  tags: javascript, detection
+
+http:
+  - method: GET
+    path:
+      - "{{BaseURL}}"
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - "document.createElement(String.fromCharCode"
+      - type: regex
+        regex:
+          - "String\\.fromCharCode\\(\\d+(,\\d+)*\\)"
